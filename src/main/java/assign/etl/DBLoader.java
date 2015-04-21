@@ -44,7 +44,7 @@ public class DBLoader {
 		Long assignmentId = null;
 		try {
 			tx = session.beginTransaction();
-			Assignment newAssignment = new Assignment( title, new Date() ); 
+			Assignment newAssignment = new Assignment( title, new Date() );
 			session.save(newAssignment);
 		    assignmentId = newAssignment.getId();
 		    tx.commit();
@@ -115,9 +115,9 @@ public class DBLoader {
 	public List<Assignment> getAssignmentsForACourse(Long courseId) throws Exception {
 		Session session = sessionFactory.openSession();		
 		session.beginTransaction();
-		String query = "from Assignment where course=" + courseId;		
-		List<Assignment> assignments = session.createQuery(query).list();		
-		return assignments;
+		String query = "from Assignment where course=" + courseId;
+		List<Assignment> Assignment = session.createQuery(query).list();
+		return Assignment;
 	}
 	
 	public Assignment getAssignment(String title) throws Exception {
@@ -128,9 +128,9 @@ public class DBLoader {
 		Criteria criteria = session.createCriteria(Assignment.class).
         		add(Restrictions.eq("title", title));
 		
-		List<Assignment> assignments = criteria.list();
+		List<Assignment> Assignment = criteria.list();
 		
-		return assignments.get(0);		
+		return Assignment.get(0);
 	}
 	
 	public Assignment getAssignment(Long assignmentId) throws Exception {
@@ -141,8 +141,8 @@ public class DBLoader {
 		Criteria criteria = session.createCriteria(Assignment.class).
         		add(Restrictions.eq("id", assignmentId));
 		
-		List<Assignment> assignments = criteria.list();
+		List<Assignment> Assignment = criteria.list();
 		
-		return assignments.get(0);		
+		return Assignment.get(0);
 	}
 }

@@ -21,7 +21,6 @@ public class ETLController {
 
 	private void performETLActions() {		
 		try {
-
 			String source = "http://eavesdrop.openstack.org/meetings/solum/";
 			reader = new EavesdropReader(source);
 			

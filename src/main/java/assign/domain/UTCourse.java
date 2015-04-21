@@ -1,15 +1,9 @@
 package assign.domain;
 
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table( name = "ut_courses" )
@@ -17,7 +11,7 @@ public class UTCourse {
 	
 	private Long id;
     private String courseName;
-    private Set<Assignment> assignments;
+    private Set<Assignment> Assignment;
 
     public UTCourse() {
     	// this form used by Hibernate
@@ -48,11 +42,11 @@ public class UTCourse {
     }
     
     @OneToMany(mappedBy="course")
-    public Set<Assignment> getAssignments() {
-    	return this.assignments;
+    public Set<Assignment> getAssignment() {
+    	return this.Assignment;
     }
     
-    public void setAssignments(Set<Assignment> assignments) {
-    	this.assignments = assignments;
+    public void setAssignment(Set<Assignment> assignment) {
+    	this.Assignment = assignment;
     }
 }

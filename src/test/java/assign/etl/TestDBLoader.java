@@ -3,9 +3,9 @@ package assign.etl;
 import java.util.ArrayList;
 import java.util.List;
 
+import assign.domain.Assignment;
 import org.junit.Test;
 
-import assign.domain.Assignment;
 import junit.framework.TestCase;
 
 public class TestDBLoader extends TestCase {

@@ -44,7 +44,7 @@ Setting up database:
 
 ETL Example:
 
-The example in this directory model the situation of a course having one or more assignments.
+The example in this directory model the situation of a course having one or more Assignment.
 
 There are two entities corresponding to a course and a assignment.
 These are defined in assign.domain package. There is a foreign key relationship
