@@ -11,7 +11,7 @@ public class UTCourse {
 	
 	private Long id;
     private String courseName;
-    private Set<Assignment> Assignment;
+    private Set<Assignment> assignments;
 
     public UTCourse() {
     	// this form used by Hibernate
@@ -42,11 +42,11 @@ public class UTCourse {
     }
     
     @OneToMany(mappedBy="course")
-    public Set<Assignment> getAssignment() {
-    	return this.Assignment;
+    public Set<Assignment> getAssignments() {
+    	return this.assignments;
     }
     
-    public void setAssignment(Set<Assignment> assignment) {
-    	this.Assignment = assignment;
+    public void setAssignments(Set<Assignment> assignments) {
+    	this.assignments = assignments;
     }
 }

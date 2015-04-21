@@ -116,8 +116,8 @@ public class DBLoader {
 		Session session = sessionFactory.openSession();		
 		session.beginTransaction();
 		String query = "from Assignment where course=" + courseId;
-		List<Assignment> Assignment = session.createQuery(query).list();
-		return Assignment;
+		List<Assignment> assignments = session.createQuery(query).list();
+		return assignments;
 	}
 	
 	public Assignment getAssignment(String title) throws Exception {
@@ -128,9 +128,9 @@ public class DBLoader {
 		Criteria criteria = session.createCriteria(Assignment.class).
         		add(Restrictions.eq("title", title));
 		
-		List<Assignment> Assignment = criteria.list();
+		List<Assignment> assignments = criteria.list();
 		
-		return Assignment.get(0);
+		return assignments.get(0);
 	}
 	
 	public Assignment getAssignment(Long assignmentId) throws Exception {
@@ -141,8 +141,8 @@ public class DBLoader {
 		Criteria criteria = session.createCriteria(Assignment.class).
         		add(Restrictions.eq("id", assignmentId));
 		
-		List<Assignment> Assignment = criteria.list();
+		List<Assignment> assignments = criteria.list();
 		
-		return Assignment.get(0);
+		return assignments.get(0);
 	}
 }
