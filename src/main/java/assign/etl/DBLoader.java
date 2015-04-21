@@ -18,7 +18,7 @@ public class DBLoader {
 	private SessionFactory sessionFactory;
 	private ServiceRegistry serviceRegistry;
 	
-	Logger logger;
+	private Logger logger;
 	
 	public DBLoader() {
 		// configures settings from hibernate.cfg.xml
@@ -31,7 +31,7 @@ public class DBLoader {
 
 		// A SessionFactory is set up once for an application
 		sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-		System.out.println("Done Getting Configuration");
+
 		logger = Logger.getLogger("EavesdropReader");
 	}
 	

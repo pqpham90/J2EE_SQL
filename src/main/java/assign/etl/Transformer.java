@@ -6,8 +6,7 @@ import java.util.Map;
 import java.util.logging.*;
 
 public class Transformer {
-	
-	Logger logger;
+	private Logger logger;
 	
 	public Transformer() {
 		logger = Logger.getLogger("Transformer");		

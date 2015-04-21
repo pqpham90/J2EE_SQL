@@ -7,8 +7,8 @@ import java.util.logging.*;
 
 public class EavesdropReader {
 	
-	String url;
-	Logger logger; 
+	private String url;
+	private Logger logger;
 	
 	public EavesdropReader(String url) {
 		this.url = url;
@@ -25,8 +25,9 @@ public class EavesdropReader {
 		logger.info("Inside readData.");
 		
 		Map<String, List<String>> data = new HashMap<String, List<String>>();
-		
+
 		// Read and parse data from this.url
+		System.out.println(url);
 				
 		return data;
 	}

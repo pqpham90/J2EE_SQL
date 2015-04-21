@@ -1,13 +1,18 @@
 package assign.etl;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 public class ETLController {
-	
-	EavesdropReader reader;
-	Transformer transformer;
-	DBLoader loader;
+	private EavesdropReader reader;
+	private Transformer transformer;
+	private DBLoader loader;
 	
 	public ETLController() {
 		transformer = new Transformer();
@@ -29,10 +34,19 @@ public class ETLController {
 			
 			// Transform data
 			Map<String, List<String>> transformedData = transformer.transform(data);
+
+			Document doc = Jsoup.connect(source).get();
+			Elements links = doc.select("body a");
+
+			ListIterator<Element> iter = links.listIterator();
+			while(iter.hasNext()) {
+				Element e = iter.next();
+				String s = e.html();
+				System.out.println(s);
+			}
 			
 			// Load data
 			loader.loadData(transformedData);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
