@@ -49,11 +49,10 @@
         <property name="show_sql">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
                 
         <!-- Names the annotated entity class -->
-        <mapping class="assign.domain.Assignment"/>
-        <mapping class="assign.domain.UTCourse"/>
+        <mapping class="assign.domain.Meeting"/>
 
     </session-factory>
 

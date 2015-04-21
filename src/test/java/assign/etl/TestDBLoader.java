@@ -1,12 +1,8 @@
 package assign.etl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import assign.domain.Assignment;
-import org.junit.Test;
-
+import assign.domain.Meeting;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 public class TestDBLoader extends TestCase {
 
@@ -18,67 +14,38 @@ public class TestDBLoader extends TestCase {
 	}
 	
 	@Test
-	public void testAssignmentInsert() {
+	public void testMeetingInsert() {
 		try {
-			String title = "HTTP Proxy Server";
-			Long assignmentId = etlHandler.addAssignment(title);
-			System.out.println("Assignment ID:" + assignmentId);
-			
-			Assignment proxyServer = etlHandler.getAssignment(title);
-			assertEquals(proxyServer.getTitle(), title);			
+			String teamMeetingName = "Hyrule";
+			String year = "1997";
+			String meetingName = "Triforce";
+			String link = "Link";
+
+			int assignmentId = etlHandler.addMeeting(teamMeetingName, year, meetingName, link);
+			System.out.println("Meeting ID:" + assignmentId);
+
+			Meeting proxyServer = etlHandler.getMeeting(teamMeetingName);
+			assertEquals(proxyServer.getTeamMeetingName(), teamMeetingName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-		
-	public void testUpdate() {
-	}
-	
+
 	@Test
-	public void testAssignmentAndCourseInsert() {
+	public void testMeetingtGetWithId() {
 		try {
-			String title = "ETL";
-			String courseTitle = "Modern Web Applications";
-			Long assignmentId = etlHandler.addAssignmentAndCourse(title, courseTitle);
-			System.out.println("Assignment ID:" + assignmentId);
-			
-			Assignment proxyServer = etlHandler.getAssignment(title);
-			assertEquals(proxyServer.getTitle(), title);			
+			String teamMeetingName = "Balamb";
+			String year = "1999";
+			String meetingName = "Gunblade";
+			String link = "Squall";
+
+			int assignmentId = etlHandler.addMeeting(teamMeetingName, year, meetingName, link);
+			System.out.println("Meeting ID:" + assignmentId);
+
+			Meeting proxyServer = etlHandler.getMeeting(assignmentId);
+			assertEquals(proxyServer.getTeamMeetingName(), teamMeetingName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	@Test
-	public void testMultipleAssignments() {
-		try {
-		List<String> assignments = new ArrayList<String>();
-		assignments.add("Memory Subsystem");
-		assignments.add("Device Drivers");
-		String courseTitle = "Operating Systems";
-		Long courseId = etlHandler.addAssignmentsToCourse(assignments, courseTitle);
-		
-		List<Assignment> a = etlHandler.getAssignmentsForACourse(courseId);
-		
-		System.out.println("Title: " + a.get(0).getTitle());
-		System.out.println("Title: " + a.get(1).getTitle());
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void testAssignmentGetWithId() {
-		try {
-			String title = "Servlets";
-			Long assignmentId = etlHandler.addAssignment(title);
-			System.out.println("Assignment ID:" + assignmentId);
-			
-			Assignment proxyServer = etlHandler.getAssignment(assignmentId);
-			assertEquals(proxyServer.getTitle(), title);			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}	
 }
