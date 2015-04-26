@@ -46,7 +46,7 @@ public class DBLoader {
 		try {
 			tx = session.beginTransaction();
 			Meeting newMeeting = new Meeting(teamMeetingName, year, meetingName, link);
-			session.save(newMeeting);
+			session.saveOrUpdate(newMeeting);
 		    assignmentId = newMeeting.getId();
 		    tx.commit();
 		} catch (Exception e) {

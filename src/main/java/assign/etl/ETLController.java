@@ -5,9 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 
 public class ETLController {
 	private EavesdropReader reader;
@@ -24,31 +22,22 @@ public class ETLController {
 		etlController.performETLActions();
 	}
 
-	private void performETLActions() {		
-		try {
-			String source = "http://eavesdrop.openstack.org/meetings/solum/";
-			reader = new EavesdropReader(source);
-			
+	private void performETLActions() {
+		ArrayList<String> source = new ArrayList<>();
+		source.add("http://eavesdrop.openstack.org/meetings/solum/");
+		source.add("http://eavesdrop.openstack.org/meetings/solum_team_meeting/");
+
+		for(String link : source){
+			reader = new EavesdropReader(link);
+
 			// Read data
 			Map<String, List<String>> data = reader.readData();
-			
+
 			// Transform data
 			Map<String, List<String>> transformedData = transformer.transform(data);
 
-			Document doc = Jsoup.connect(source).get();
-			Elements links = doc.select("body a");
-
-			ListIterator<Element> iter = links.listIterator();
-			while(iter.hasNext()) {
-				Element e = iter.next();
-				String s = e.html();
-				System.out.println(s);
-			}
-			
 			// Load data
 			loader.loadData(transformedData);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
+		}
 	}
 }
