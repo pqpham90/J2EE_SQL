@@ -36,5 +36,7 @@ public class ETLController {
 			// Load data
 			loader.loadData(transformedData);
 		}
+
+		System.exit(0);
 	}
 }

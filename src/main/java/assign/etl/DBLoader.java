@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -39,8 +40,21 @@ public class DBLoader {
 		logger.info("Inside loadData.");
 
 		for (Map.Entry<String, List<String>> log : data.entrySet()) {
-			String key = log.getKey().toString();;
-			System.out.println("key, " + key);
+			String key = log.getKey().toString();
+
+			List<String> info = data.get(key);
+
+			Iterator i = info.iterator();
+			String teamMeetingName = i.next().toString();
+			String year = i.next().toString();
+			String link = i.next().toString();
+
+			try {
+				int toAdd = addMeeting(teamMeetingName, year, key, link);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
