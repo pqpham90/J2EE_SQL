@@ -58,6 +58,7 @@ public class DBLoader {
 		finally {
 			session.close();
 		}
+
 		return assignmentId;
 	}
 	
