@@ -37,6 +37,11 @@ public class DBLoader {
 	
 	public void loadData(Map<String, List<String>> data) {
 		logger.info("Inside loadData.");
+
+		for (Map.Entry<String, List<String>> log : data.entrySet()) {
+			String key = log.getKey().toString();;
+			System.out.println("key, " + key);
+		}
 	}
 	
 	public int addMeeting(String teamMeetingName, String year, String meetingName, String link) throws Exception {
