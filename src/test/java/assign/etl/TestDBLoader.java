@@ -4,6 +4,8 @@ import assign.domain.Meeting;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class TestDBLoader extends TestCase {
@@ -100,7 +102,55 @@ public class TestDBLoader extends TestCase {
 	}
 
 	@Test
-	public void testGetMeetingWithNameAndYear() {
+	public void testResponse1() {
+		try {
+			URL url = new URL("http://localhost:8080/assignment6/myeavesdrop/meetings/solum/year/2015");
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+
+			int code = connection.getResponseCode();
+			assertEquals(200, code);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testResponse2() {
+		try {
+			URL url = new URL("http://localhost:8080/assignment6/myeavesdrop/meetings/solum/year/2030");
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+
+			int code = connection.getResponseCode();
+			assertEquals(400, code);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testResponse3() {
+		try {
+			URL url = new URL("http://localhost:8080/assignment6/myeavesdrop/meetings/solumz/year/2015");
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+
+			int code = connection.getResponseCode();
+			assertEquals(400, code);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testGetMeetingWithNameAndYear1() {
 		try {
 			String meetingName = "solum_team_meeting";
 			String year = "2014";
@@ -108,6 +158,20 @@ public class TestDBLoader extends TestCase {
 			List<Meeting> meetings = etlHandler.getMeeting(meetingName, year);
 
 			assertEquals(48, meetings.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testGetMeetingWithNameAndYear2() {
+		try {
+			String meetingName = "solum";
+			String year = "2013";
+
+			List<Meeting> meetings = etlHandler.getMeeting(meetingName, year);
+
+			assertEquals(0, meetings.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
