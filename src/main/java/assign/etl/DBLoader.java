@@ -81,19 +81,6 @@ public class DBLoader {
 		return assignmentId;
 	}
 	
-	public Meeting getMeeting(String title) throws Exception {
-		Session session = sessionFactory.openSession();
-		
-		session.beginTransaction();
-		
-		Criteria criteria = session.createCriteria(Meeting.class).
-        		add(Restrictions.eq("teamMeetingName", title));
-		
-		List<Meeting> meetings = criteria.list();
-		
-		return meetings.get(0);
-	}
-	
 	public Meeting getMeeting(int assignmentId) throws Exception {
 		Session session = sessionFactory.openSession();
 		
@@ -105,5 +92,47 @@ public class DBLoader {
 		List<Meeting> meetings = criteria.list();
 		
 		return meetings.get(0);
+	}
+
+	public boolean meetingExists(String title) throws Exception {
+		Session session = sessionFactory.openSession();
+
+		session.beginTransaction();
+
+		Criteria criteria = session.createCriteria(Meeting.class).
+				add(Restrictions.eq("teamMeetingName", title));
+
+		List<Meeting> meetings = criteria.list();
+
+		return (meetings.size() > 0);
+	}
+
+	public boolean yearExists(String year) throws Exception {
+		Session session = sessionFactory.openSession();
+
+		session.beginTransaction();
+
+		Criteria criteria = session.createCriteria(Meeting.class).
+				add(Restrictions.eq("year", year));
+
+		List<Meeting> meetings = criteria.list();
+
+		return (meetings.size() > 0);
+	}
+
+	public List<Meeting> getMeeting(String meeting, String year) throws Exception {
+		Session session = sessionFactory.openSession();
+
+		session.beginTransaction();
+
+		Criteria criteria = session.createCriteria(Meeting.class)
+				.add(Restrictions.conjunction()
+								.add(Restrictions.eq("teamMeetingName", meeting))
+								.add(Restrictions.eq("year", year))
+				);
+
+		List<Meeting> meetings = criteria.list();
+
+		return meetings;
 	}
 }
