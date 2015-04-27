@@ -4,7 +4,6 @@ import assign.services.MyEavesDropService;
 import assign.services.MyEavesDropServiceImpl;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -26,6 +25,14 @@ public class MyEavesDropResource {
 		this.myEavesDropService = new MyEavesDropServiceImpl(dburl, username, password);
 	}
 
+	public MyEavesDropResource(String password, String username, String dburl) {
+		this.password = password;
+		this.username = username;
+		this.dburl = dburl;
+		this.myEavesDropService = new MyEavesDropServiceImpl(dburl, username, password);
+	}
+
+	// just for checking that enviroment is working
 	@GET
 	@Path("/helloworld")
 	@Produces("text/html")
@@ -34,16 +41,16 @@ public class MyEavesDropResource {
 		return Response.status(405).entity(result).build();
 	}
 
+	// returns an xml of the number of meetings for the meeting in a given year
 	@GET
 	@Path("/{meeting}/year/{year}/count")
 	@Produces("application/xml")
 	public Response getNumMeetingCountInYear(@PathParam("meeting") String meeting,
-	                                     @PathParam("year") String year,
-	                                     @Context final HttpServletResponse response) {
+	                                     @PathParam("year") String year) {
 		String result = "";
 
 		try {
-			if(!myEavesDropService.checkMeeting(meeting) || !myEavesDropService.checkMYears(year)) {
+			if(!myEavesDropService.checkMeeting(meeting) || !myEavesDropService.checkYearsExist(year)) {
 				return Response.status(400).entity(result).build();
 			}
 		}
@@ -63,16 +70,16 @@ public class MyEavesDropResource {
 		return Response.status(200).entity(result).build();
 	}
 
+	// returns an xml of all the meetings for the meeting in a given year
 	@GET
 	@Path("/{meeting}/year/{year}")
 	@Produces("application/xml")
 	public Response getNumMeetingsInYear(@PathParam("meeting") String meeting,
-	                                     @PathParam("year") String year,
-	                                     @Context final HttpServletResponse response) {
+	                                     @PathParam("year") String year) {
 		String result = "";
 
 		try {
-			if(!myEavesDropService.checkMeeting(meeting) || !myEavesDropService.checkMYears(year)) {
+			if(!myEavesDropService.checkMeeting(meeting) || !myEavesDropService.checkYearsExist(year)) {
 				return Response.status(400).entity(result).build();
 			}
 		}

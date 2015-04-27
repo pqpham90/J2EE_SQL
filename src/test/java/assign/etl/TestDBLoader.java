@@ -78,6 +78,18 @@ public class TestDBLoader extends TestCase {
 	}
 
 	@Test
+	public void testGetMeetingWithName3() {
+		try {
+			String meetingName = "solum";
+			Boolean meetingExists = etlHandler.meetingExists(meetingName);
+
+			assertTrue(meetingExists);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
 	public void testGetMeetingWithYear1() {
 		try {
 			String year = "1980";
@@ -172,6 +184,38 @@ public class TestDBLoader extends TestCase {
 			List<Meeting> meetings = etlHandler.getMeeting(meetingName, year);
 
 			assertEquals(0, meetings.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testGetMeetings1() {
+		try {
+			String meetingName = "solum";
+			String year = "2013";
+
+			List<Meeting> meetings = etlHandler.getMeeting(meetingName, year);
+
+			String name = meetings.get(0).getTeamMeetingName();
+
+			assertEquals(meetingName, name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testGetMeetings2() {
+		try {
+			String meetingName = "solum_team_meeting";
+			String year = "2013";
+
+			List<Meeting> meetings = etlHandler.getMeeting(meetingName, year);
+
+			String name = meetings.get(0).getTeamMeetingName();
+
+			assertEquals(meetingName, name);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -38,6 +38,7 @@ public class MyEavesDropServiceImpl implements MyEavesDropService {
 	}
 
 
+	// returns a string representing an xml of all the meetings
 	public String getMeetings(String meeting, String year) throws Exception {
 		DBLoader dbLoader = new DBLoader();
 		List<Meeting> meetings =  dbLoader.getMeeting(meeting, year);
@@ -57,12 +58,14 @@ public class MyEavesDropServiceImpl implements MyEavesDropService {
 	}
 
 
+	// checks to see if meeting exists in the database
 	public boolean checkMeeting(String meeting) throws Exception {
 		DBLoader dbLoader = new DBLoader();
 		return dbLoader.meetingExists(meeting);
 	}
 
-	public boolean checkMYears(String meeting) throws Exception {
+	// checks to see if a project for that given year exists in the database
+	public boolean checkYearsExist(String meeting) throws Exception {
 		DBLoader dbLoader = new DBLoader();
 		return dbLoader.yearExists(meeting);
 	}

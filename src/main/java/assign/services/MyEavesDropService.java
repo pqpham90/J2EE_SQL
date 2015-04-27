@@ -7,5 +7,5 @@ public interface MyEavesDropService {
 
 	boolean checkMeeting(String meeting) throws Exception;
 
-	boolean checkMYears(String meeting) throws  Exception;
+	boolean checkYearsExist(String meeting) throws  Exception;
 }

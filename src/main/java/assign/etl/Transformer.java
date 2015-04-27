@@ -17,38 +17,41 @@ public class Transformer {
 	public Transformer() {
 		logger = Logger.getLogger("Transformer");		
 	}
-	
+
+	// takes in the data and transforms it into a format the database loader can use
 	public Map<String, List<String>> transform(Map<String, List<String>> data) {
 		logger.info("Inside transform.");
 
 		Map<String, List<String>> logData = new LinkedHashMap<>();
 
+		// only deal with meeting links
 		for (String link : data.keySet()) {
 			Pattern p = Pattern.compile("^http://eavesdrop\\.openstack\\.org/meetings/(\\w+)/");
 			Matcher m = p.matcher(link);
 
+			// looks inside each year for meeting logs.
 			for (String year : data.get(link)) {
 				if(m.matches()) {
 					ArrayList<String> meetingLogs = getLog(link + year, m.group(1));
 
 					for (String log: meetingLogs) {
-//						System.out.println(m.group(1));
 						ArrayList<String> meetingData = new ArrayList<>();
+						// adds the data into the meetingData list
 						meetingData.add(m.group(1));
 						meetingData.add(year.substring(0, year.length() - 1));
 						meetingData.add(link + year + log);
 
+						// adds the data to the logData hash
 						logData.put(log, meetingData);
 					}
 				}
 			}
 		}
-
-		// transform data into newData
 		
 		return logData;
 	}
 
+	// obtains the appropriate log file
 	public ArrayList<String> getLog(String url, String team) {
 		ArrayList<String> meetingLogs = new ArrayList<>();
 		try {
@@ -58,6 +61,8 @@ public class Transformer {
 			String match = "";
 
 			/*
+			 * Place log files into pre-determined indexes based on extension
+			 *
  			 * 0 = html
  			 * 1 = log.html
  			 * 2 = log.txt
@@ -71,11 +76,13 @@ public class Transformer {
 				Element e = iter.next();
 				String original = e.html();
 
+				// making sure we're dealing with a log link
 				if(original.contains(team)) {
 					String s = original.replace(team+".", "");
 
 					String log[] = s.split("\\.");
 
+					// adds when is on same meeting and index where necessary
 					if((log[0] + "." + log[1]).equals(match)) {
 						if(original.contains("html") && !original.contains("log.html")) {
 							logs[0] = original;
@@ -95,7 +102,7 @@ public class Transformer {
 						}
 					}
 					else {
-
+						// this is a new meeting name
 						if(logExists[1]) {
 							meetingLogs.add(logs[1]);
 						}
@@ -131,6 +138,7 @@ public class Transformer {
 						match = log[0] + "." + log[1];
 					}
 
+					// for the final meeting
 					if(logExists[1]) {
 						meetingLogs.add(logs[1]);
 					}

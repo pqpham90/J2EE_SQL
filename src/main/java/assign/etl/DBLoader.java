@@ -35,7 +35,8 @@ public class DBLoader {
 
 		logger = Logger.getLogger("EavesdropReader");
 	}
-	
+
+	// loads the data into the database
 	public void loadData(Map<String, List<String>> data) {
 		logger.info("Inside loadData.");
 
@@ -57,7 +58,8 @@ public class DBLoader {
 			}
 		}
 	}
-	
+
+	// adds a meeting to the database
 	public int addMeeting(String teamMeetingName, String year, String meetingName, String link) throws Exception {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
@@ -80,7 +82,8 @@ public class DBLoader {
 
 		return assignmentId;
 	}
-	
+
+	// gets the meeting with the matching id
 	public Meeting getMeeting(int assignmentId) throws Exception {
 		Session session = sessionFactory.openSession();
 		
@@ -94,6 +97,7 @@ public class DBLoader {
 		return meetings.get(0);
 	}
 
+	// returns whether or not a meeting exists under that name
 	public boolean meetingExists(String title) throws Exception {
 		Session session = sessionFactory.openSession();
 
@@ -107,6 +111,7 @@ public class DBLoader {
 		return (meetings.size() > 0);
 	}
 
+	// returns whether or not a project exists for that year
 	public boolean yearExists(String year) throws Exception {
 		Session session = sessionFactory.openSession();
 
@@ -120,6 +125,7 @@ public class DBLoader {
 		return (meetings.size() > 0);
 	}
 
+	// returns a list of all the meetings that match the team meeting name and year
 	public List<Meeting> getMeeting(String meeting, String year) throws Exception {
 		Session session = sessionFactory.openSession();
 
