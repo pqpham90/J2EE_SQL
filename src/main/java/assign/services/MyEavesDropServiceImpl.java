@@ -1,9 +1,11 @@
 package assign.services;
 
+import assign.domain.Meeting;
 import assign.etl.DBLoader;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 public class MyEavesDropServiceImpl implements MyEavesDropService {
 	String dbURL = "";
@@ -29,11 +31,31 @@ public class MyEavesDropServiceImpl implements MyEavesDropService {
         return ds;
     }
 
-	// parses out all meeting info from database
-	public int getMeetings(String meeting, String year) throws Exception {
+	// counts number of meetings for given year
+	public int getMeetingCounts(String meeting, String year) throws Exception {
 		DBLoader dbLoader = new DBLoader();
 		return dbLoader.getMeeting(meeting, year).size();
 	}
+
+
+	public String getMeetings(String meeting, String year) throws Exception {
+		DBLoader dbLoader = new DBLoader();
+		List<Meeting> meetings =  dbLoader.getMeeting(meeting, year);
+
+		String result = "";
+
+		for (Meeting m : meetings) {
+			result += "<meeting>";
+			result += "<team_meeting_name>" + m.getTeamMeetingName() +"</team_meeting_name>";
+			result += "<year>" + m.getYear() +"</year>";
+			result += "<meeting_name>" + m.getMeetingName() +"</meeting_name>";
+			result += "<link>" + m.getLink() +"</link>";
+			result += "</meeting>";
+		}
+
+		return result;
+	}
+
 
 	public boolean checkMeeting(String meeting) throws Exception {
 		DBLoader dbLoader = new DBLoader();

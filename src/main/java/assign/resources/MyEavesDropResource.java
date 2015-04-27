@@ -35,8 +35,36 @@ public class MyEavesDropResource {
 	}
 
 	@GET
+	@Path("/{meeting}/year/{year}/count")
+	@Produces("application/xml")
+	public Response getNumMeetingCountInYear(@PathParam("meeting") String meeting,
+	                                     @PathParam("year") String year,
+	                                     @Context final HttpServletResponse response) {
+		String result = "";
+
+		try {
+			if(!myEavesDropService.checkMeeting(meeting) || !myEavesDropService.checkMYears(year)) {
+				return Response.status(400).entity(result).build();
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			result += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+			result += "<meetings>";
+			result += "<count>" + myEavesDropService.getMeetingCounts(meeting, year) + "</count>";
+			result += "</meetings>";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(result).build();
+	}
+
+	@GET
 	@Path("/{meeting}/year/{year}")
-//	@Produces("text/html")
 	@Produces("application/xml")
 	public Response getNumMeetingsInYear(@PathParam("meeting") String meeting,
 	                                     @PathParam("year") String year,
@@ -55,7 +83,7 @@ public class MyEavesDropResource {
 		try {
 			result += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 			result += "<meetings>";
-			result += "<count>" + myEavesDropService.getMeetings(meeting, year) + "</count>";
+			result += myEavesDropService.getMeetings(meeting, year);
 			result += "</meetings>";
 		}
 		catch (Exception e) {
